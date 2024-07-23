@@ -15,6 +15,7 @@ import {
   PieChartOutlined,
   TeamOutlined,
   UserOutlined,
+  LockOutlined,
 } from '@ant-design/icons'
 
 import {
@@ -24,6 +25,10 @@ import {
   Layout,
   Menu,
   theme,
+  Checkbox,
+  Form,
+  Input,
+  Flex,
 } from 'antd'
 
 const { Header, Content, Footer, Sider } = Layout
@@ -98,6 +103,30 @@ const DemoPage = (name = 'demo') => () => {
   )
 }
 
+const Login = () => {
+
+  const onFinish = values => {
+    console.log({values})
+  }
+
+  return createElement(Flex, { style: { height: '100vh' }, justify: 'center', align: 'center' },
+    createElement(Form, { initialValues: { remember: true }, onFinish },
+      createElement(Form.Item, { name: 'email', rules: [{ required: true, message: 'Please input your Email!',}] },
+        createElement(Input, { prefix: createElement(UserOutlined), placeholder: 'Email' }),
+      ),
+      createElement(Form.Item, { name: 'password', rules: [{ required: true, message: 'Please input your Password!',}] },
+        createElement(Input, { prefix: createElement(LockOutlined), placeholder: 'Password' }),
+      ),
+      createElement(Form.Item, { name: 'remember', valuePropName: 'checked' },
+        createElement(Checkbox, null, 'Remember me'),
+      ),
+      createElement(Form.Item, null,
+        createElement(Button, { type: 'primary', htmlType: 'submit' }, 'Log in'),
+      ),
+    ),
+  )
+}
+
 const Counter = () => {
   const [count, setCount] = useState(0)
 
@@ -121,7 +150,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/login',
-    element: createElement(DemoPage('login')),
+    element: createElement(Login),
   },
 ])
 
