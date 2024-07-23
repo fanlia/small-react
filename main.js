@@ -7,6 +7,7 @@ import {
   useRouteError,
   Link,
   Outlet,
+  useNavigate,
 } from "react-router-dom"
 
 import {
@@ -104,9 +105,11 @@ const DemoPage = (name = 'demo') => () => {
 }
 
 const Login = () => {
+  const navigate = useNavigate()
 
   const onFinish = values => {
     console.log({values})
+    navigate('/')
   }
 
   return createElement(Flex, { style: { height: '100vh' }, justify: 'center', align: 'center' },
