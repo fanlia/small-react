@@ -4,9 +4,11 @@ import ReactDOM from 'react-dom/client'
 import {
   createBrowserRouter,
   RouterProvider,
+  useRouteError,
+  Link,
 } from "react-router-dom"
 
-import { Button } from 'antd'
+import { Button, Result } from 'antd'
 
 const App = () => {
   const [count, setCount] = useState(0)
@@ -17,10 +19,23 @@ const App = () => {
   }, 'count is ', count)
 }
 
+const ErrorPage = () => {
+  const error = useRouteError()
+  console.error(error)
+
+  return createElement(Result, {
+    status: error.status,
+    title: error.status,
+    subTitle: error.statusText || error.message,
+    extra: createElement(Button, { type: 'primary' }, createElement(Link, { to: '/' }, 'Back Home')),
+  })
+}
+
 const router = createBrowserRouter([
   {
     path: "/",
     element: createElement(App),
+    errorElement: createElement(ErrorPage),
   },
 ])
 
