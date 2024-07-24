@@ -261,7 +261,7 @@ export const startApp = ({
           createElement(Input, { prefix: createElement(UserOutlined), placeholder: 'Email' }),
         ),
         createElement(Form.Item, { name: 'password', rules: [{ required: true, message: 'Please input your Password!',}] },
-          createElement(Input, { prefix: createElement(LockOutlined), placeholder: 'Password' }),
+          createElement(Input.Password, { prefix: createElement(LockOutlined), placeholder: 'Password' }),
         ),
         createElement(Form.Item, { name: 'autoLogin', valuePropName: 'checked' },
           createElement(Checkbox, null, 'Remember me'),
