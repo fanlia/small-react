@@ -243,11 +243,13 @@ export const startApp = ({
     const navigate = useNavigate()
     const auth = useAuth()
     const { message } = AntdApp.useApp()
+    const [loading, setLoading] = useState(false)
 
     if (auth.status === 'checking') return createElement(Loading)
     if (auth.status === 'checked') return createElement(Navigate, { to: '/' })
 
     const onFinish = async signData => {
+      setLoading(true)
       try {
         await auth.auth.login(signData)
         const to = new URLSearchParams(location.search).get('redirect') || '/'
@@ -255,6 +257,7 @@ export const startApp = ({
       } catch (e) {
         message.warning('Login Failed, please try again!')
       }
+      setLoading(false)
     }
 
     return createElement(Flex, { style: { height: '100vh' }, justify: 'center', align: 'center' },
@@ -270,7 +273,7 @@ export const startApp = ({
           createElement(Checkbox, null, 'Remember me'),
         ),
         createElement(Form.Item, null,
-          createElement(Button, { type: 'primary', htmlType: 'submit' }, 'Log in'),
+          createElement(Button, { type: 'primary', htmlType: 'submit', loading, block: true }, 'Log in'),
         ),
       ),
     )
