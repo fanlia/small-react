@@ -16,25 +16,22 @@ import {
   Space,
 } from 'antd'
 
-function getItem(label, key, icon, children) {
-  return {
-    key,
-    icon,
-    children,
-    label,
-  };
-}
-
 const menu_items = [
-  getItem('Option 1', '1', createElement(PieChartOutlined)),
-  getItem('Option 2', '2', createElement(DesktopOutlined)),
-  getItem('User', 'sub1', createElement(UserOutlined), [
-    getItem('Tom', '3'),
-    getItem('Bill', '4'),
-    getItem('Alex', '5'),
-  ]),
-  getItem('Team', 'sub2', createElement(TeamOutlined), [getItem('Team 1', '6'), getItem('Team 2', '8')]),
-  getItem('Files', '9', createElement(FileOutlined)),
+  {
+    key: '/',
+    label: 'Home',
+    icon: createElement(PieChartOutlined),
+  },
+  {
+    key: '/about',
+    label: 'About',
+    icon: createElement(DesktopOutlined),
+  },
+  {
+    key: '/test',
+    label: 'Test',
+    icon: createElement(FileOutlined),
+  },
 ]
 
 const Home = () => {
@@ -55,8 +52,12 @@ const routes = [
     element: createElement(Home),
   },
   {
-    path: '/demo',
-    element: createElement(DemoPage('demo')),
+    path: '/about',
+    element: createElement(DemoPage('About')),
+  },
+  {
+    path: '/test',
+    element: createElement(DemoPage('Test')),
   },
 ]
 
