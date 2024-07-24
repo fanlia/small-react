@@ -162,6 +162,10 @@ export const startApp = ({
       return createElement(Navigate, { to })
     }
 
+    const bread_items = menu_items.filter(d => d.key === location.pathname).map(d => ({
+      title: createElement(Link, { to: d.key }, d.label),
+    }))
+
     const user = auth.auth.getUser()
 
     const handleAvatar = async ({ key }) => {
@@ -204,7 +208,7 @@ export const startApp = ({
           ),
         ),
         createElement(Content, { style: { margin: '0 16px' } },
-          createElement(Breadcrumb, { style: { margin: '16px 0'}, items: [ { title: 'User' }, { title: 'Bill' } ] }),
+          createElement(Breadcrumb, { style: { margin: '16px 0'}, items: bread_items }),
           createElement('div', { style: { padding: 24, minHeight: 360, background: colorBgContainer, borderRadius: borderRadiusLG } },
             createElement(AutherContext.Provider, { value: auth.auth },
               createElement(Outlet),
