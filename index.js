@@ -54,6 +54,14 @@ export const Loading = () => {
   return createElement(Spin)
 }
 
+export const HeadTitle = ({ title, children }) => {
+  useEffect(() => {
+    document.title = title
+  }, [title])
+
+  return children
+}
+
 const KEY = 'access_token'
 
 const AccessToken = {
@@ -164,7 +172,9 @@ export const startApp = ({
     }
 
     const bread_items = menu_items.filter(d => d.key === location.pathname).map(d => ({
-      title: createElement(Link, { to: d.key }, d.label),
+      title: createElement(Link, { to: d.key },
+        createElement(HeadTitle, { title: `${d.label} - ${title}` },  d.label),
+      ),
     }))
 
     const user = auth.auth.getUser()
@@ -262,7 +272,9 @@ export const startApp = ({
 
     return createElement(Flex, { style: { height: '100vh' }, justify: 'center', align: 'center' },
       createElement(Form, { initialValues: { autoLogin: true }, onFinish },
-        createElement('h1', { style: { textAlign: 'center' } }, title),
+        createElement('h1', { style: { textAlign: 'center' } },
+          createElement(HeadTitle, { title: `Login - ${title}`}, title)
+        ),
         createElement(Form.Item, { name: 'email', rules: [{ required: true, message: 'Please input your Email!',}] },
           createElement(Input, { prefix: createElement(UserOutlined), placeholder: 'Email' }),
         ),
