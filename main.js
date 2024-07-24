@@ -1,5 +1,5 @@
 
-import { startApp, DemoPage } from './index'
+import { startApp, DemoPage, useAuther } from './index'
 import { createElement, useState } from 'react'
 
 import {
@@ -36,6 +36,8 @@ const menu_items = [
 
 const Home = () => {
   const [count, setCount] = useState(0)
+  const auther = useAuther()
+  console.log(auther)
 
   return createElement(Space, null,
     createElement(Button, {

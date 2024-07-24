@@ -3,7 +3,7 @@ import 'antd/dist/reset.css'
 import zhCN from 'antd/locale/zh_CN'
 import 'dayjs/locale/zh-cn'
 
-import React, { createElement, Fragment, useState, useEffect } from 'react'
+import React, { createElement, Fragment, useState, useEffect, useContext, createContext } from 'react'
 import ReactDOM from 'react-dom/client'
 import {
   createBrowserRouter,
@@ -118,6 +118,10 @@ const DefaultAuther = {
   },
 }
 
+const AutherContext = createContext({})
+
+export const useAuther = () => useContext(AutherContext)
+
 export const startApp = ({
   mount = 'root',
   menu_items = [],
@@ -202,7 +206,9 @@ export const startApp = ({
         createElement(Content, { style: { margin: '0 16px' } },
           createElement(Breadcrumb, { style: { margin: '16px 0'}, items: [ { title: 'User' }, { title: 'Bill' } ] }),
           createElement('div', { style: { padding: 24, minHeight: 360, background: colorBgContainer, borderRadius: borderRadiusLG } },
-            createElement(Outlet),
+            createElement(AutherContext.Provider, { value: auth.auth },
+              createElement(Outlet),
+            ),
           ),
         ),
         createElement(Footer, { style: { textAlign: 'center' } },
