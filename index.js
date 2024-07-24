@@ -174,7 +174,7 @@ export const startApp = ({
     return createElement(Layout, { style: { minHeight: '100vh'} },
       createElement(Sider, { collapsible: true, collapsed, onCollapse: setCollapsed },
         createElement(Space, { style: { padding: 24, fontSize: '16px', width: 64, height: 64, color: 'white'} }, 'LOGO'),
-        createElement(Menu, { theme: 'dark', defaultSelectedKeys: [location.pathname], mode: 'inline', items: menu_items, onClick: handleMenuClick }),
+        createElement(Menu, { theme: 'dark', selectedKeys: [location.pathname], mode: 'inline', items: menu_items, onClick: handleMenuClick }),
       ),
       createElement(Layout, {},
         createElement(Header, { style: { padding: 0, background: colorBgContainer } },
