@@ -123,6 +123,7 @@ const AutherContext = createContext({})
 export const useAuther = () => useContext(AutherContext)
 
 export const startApp = ({
+  title = 'LOGO',
   mount = 'root',
   menu_items = [],
   routes = [],
@@ -181,7 +182,7 @@ export const startApp = ({
 
     return createElement(Layout, { style: { minHeight: '100vh'} },
       createElement(Sider, { collapsible: true, collapsed, onCollapse: setCollapsed },
-        createElement(Space, { style: { padding: 24, fontSize: '16px', width: 64, height: 64, color: 'white'} }, 'LOGO'),
+        createElement(Space, { style: { padding: 24, fontSize: '16px', width: 64, height: 64, color: 'white'} }, title),
         createElement(Menu, { theme: 'dark', selectedKeys: [location.pathname], mode: 'inline', items: menu_items, onClick: handleMenuClick }),
       ),
       createElement(Layout, {},
@@ -218,7 +219,8 @@ export const startApp = ({
         createElement(Footer, { style: { textAlign: 'center' } },
           'Ant Design ©',
           new Date().getFullYear(),
-          ' Created by Ant UED',
+          ' ',
+          title,
         ),
       ),
     )
@@ -257,6 +259,7 @@ export const startApp = ({
 
     return createElement(Flex, { style: { height: '100vh' }, justify: 'center', align: 'center' },
       createElement(Form, { initialValues: { autoLogin: true }, onFinish },
+        createElement('h1', { style: { textAlign: 'center' } }, title),
         createElement(Form.Item, { name: 'email', rules: [{ required: true, message: 'Please input your Email!',}] },
           createElement(Input, { prefix: createElement(UserOutlined), placeholder: 'Email' }),
         ),
