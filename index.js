@@ -217,7 +217,7 @@ export const startApp = ({
           ),
         ),
         createElement(Footer, { style: { textAlign: 'center' } },
-          'Ant Design ©',
+          '©',
           new Date().getFullYear(),
           ' ',
           title,
