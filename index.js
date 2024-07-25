@@ -1,7 +1,5 @@
 
 import 'antd/dist/reset.css'
-import zhCN from 'antd/locale/zh_CN'
-import 'dayjs/locale/zh-cn'
 
 import React, { createElement, Fragment, useState, useEffect, useContext, createContext } from 'react'
 import ReactDOM from 'react-dom/client'
@@ -131,13 +129,19 @@ const AutherContext = createContext({})
 
 export const useAuther = () => useContext(AutherContext)
 
-export const startApp = ({
+const identity = d => d
+
+export const startApp = async ({
   title = 'LOGO',
   mount = 'root',
   menu_items = [],
   routes = [],
   auther = DefaultAuther,
+  t = identity,
+  config_provider_options = {},
 }) => {
+
+  title = t(title)
 
   const auth = new Auth(auther)
 
@@ -206,7 +210,7 @@ export const startApp = ({
                   {
                     key: 'logout',
                     icon: createElement(LogoutOutlined),
-                    label: 'Log out',
+                    label: t('Log out'),
                   },
                 ],
                 onClick: handleAvatar,
@@ -245,7 +249,7 @@ export const startApp = ({
       status: error.status,
       title: error.status,
       subTitle: error.statusText || error.message,
-      extra: createElement(Button, { type: 'primary' }, createElement(Link, { to: '/' }, 'Back Home')),
+      extra: createElement(Button, { type: 'primary' }, createElement(Link, { to: '/' }, t('Back Home'))),
     })
   }
 
@@ -269,7 +273,7 @@ export const startApp = ({
         const to = new URLSearchParams(location.search).get('redirect') || '/'
         navigate(to)
       } catch (e) {
-        message.warning('Login Failed, please try again!')
+        message.warning(t('Login Failed, please try again!'))
       }
       setLoading(false)
     }
@@ -278,19 +282,19 @@ export const startApp = ({
       createElement(Card, {},
         createElement(Form, { initialValues: { autoLogin: true }, onFinish },
           createElement('h1', { style: { textAlign: 'center' } },
-            createElement(HeadTitle, { title: `Login - ${title}`}, title)
+            createElement(HeadTitle, { title: `${t('Login')} - ${title}`}, title)
           ),
-          createElement(Form.Item, { name: 'email', rules: [{ required: true, message: 'Please input your Email!',}] },
-            createElement(Input, { prefix: createElement(UserOutlined), placeholder: 'Email' }),
+          createElement(Form.Item, { name: 'email', rules: [{ required: true, message: t('Please input your Email!'),}] },
+            createElement(Input, { prefix: createElement(UserOutlined), placeholder: t('Email') }),
           ),
-          createElement(Form.Item, { name: 'password', rules: [{ required: true, message: 'Please input your Password!',}] },
-            createElement(Input.Password, { prefix: createElement(LockOutlined), placeholder: 'Password' }),
+          createElement(Form.Item, { name: 'password', rules: [{ required: true, message: t('Please input your Password!'),}] },
+            createElement(Input.Password, { prefix: createElement(LockOutlined), placeholder: t('Password') }),
           ),
           createElement(Form.Item, { name: 'autoLogin', valuePropName: 'checked' },
-            createElement(Checkbox, null, 'Remember me'),
+            createElement(Checkbox, null, t('Remember me')),
           ),
           createElement(Form.Item, null,
-            createElement(Button, { type: 'primary', htmlType: 'submit', loading, block: true }, 'Log in'),
+            createElement(Button, { type: 'primary', htmlType: 'submit', loading, block: true }, t('Log in')),
           ),
         ),
       ),
@@ -312,7 +316,7 @@ export const startApp = ({
 
   ReactDOM.createRoot(document.getElementById(mount)).render(
     createElement(React.StrictMode, null,
-      createElement(ConfigProvider, { locale: zhCN },
+      createElement(ConfigProvider, config_provider_options,
         createElement(AntdApp, null,
           createElement(RouterProvider, { router }),
         ),
