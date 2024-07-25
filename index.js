@@ -20,6 +20,7 @@ import {
   UserOutlined,
   LockOutlined,
   LogoutOutlined,
+  ArrowLeftOutlined,
 } from '@ant-design/icons'
 
 import {
@@ -45,9 +46,9 @@ import {
 const { Header, Content, Footer, Sider } = Layout
 
 export const DemoPage = (name = 'demo') => () => {
+  const navigate = useNavigate()
   return createElement(Fragment, null,
-    createElement('h2', null, name),
-    createElement(Link, { to: '/' }, 'Back Home'),
+    createElement('h2', null, createElement(Button, { type: 'link', onClick: () => navigate(-1) }, createElement(ArrowLeftOutlined)), ' ', name),
   )
 }
 
