@@ -158,6 +158,7 @@ export const startApp = async ({
   t = identity,
   config_provider_options = {},
   lang = navigator.language,
+  menu_theme = 'dark',
 }) => {
 
   if (lang === 'zh') {
@@ -218,9 +219,9 @@ export const startApp = async ({
     }
 
     return createElement(Layout, { style: { minHeight: '100vh'} },
-      createElement(Sider, { breakpoint: 'lg', collapsible: true, collapsed, onCollapse: setCollapsed },
-        createElement(Space, { style: { padding: 16, fontSize: '16px', width: 64, height: 64, color: 'white'} }, title),
-        createElement(Menu, { theme: 'dark', selectedKeys: [location.pathname], mode: 'inline', items: menu_items, onClick: handleMenuClick }),
+      createElement(Sider, { theme: menu_theme, breakpoint: 'lg', collapsible: true, collapsed, onCollapse: setCollapsed },
+        createElement(Space, { style: { padding: 16, fontSize: '16px', width: 64, height: 64, color: menu_theme === 'dark' ? 'white': 'black', } }, title),
+        createElement(Menu, { theme: menu_theme, selectedKeys: [location.pathname], mode: 'inline', items: menu_items, onClick: handleMenuClick }),
       ),
       createElement(Layout, {},
         createElement(Header, { style: { padding: 0, background: colorBgContainer } },
