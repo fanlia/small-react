@@ -66,4 +66,5 @@ const routes = [
 startApp({
   menu_items,
   routes,
+  //lang: 'zh',
 })

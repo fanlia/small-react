@@ -1,5 +1,7 @@
 
 import 'antd/dist/reset.css'
+import zhCN from 'antd/locale/zh_CN'
+import 'dayjs/locale/zh-cn'
 
 import React, { createElement, Fragment, useState, useEffect, useContext, createContext } from 'react'
 import ReactDOM from 'react-dom/client'
@@ -131,6 +133,20 @@ export const useAuther = () => useContext(AutherContext)
 
 const identity = d => d
 
+const zh_t_map = {
+  'Log in': '登录',
+  'Log out': '退出',
+  'Please input your Email!': '请输入邮箱!',
+  'Email': '邮箱',
+  'Please input your Password!': '请输入密码!',
+  'Password': '密码',
+  'Remember me': '记住我'
+}
+
+const zh_t = key => zh_t_map[key] || key
+
+const zh_locale = zhCN
+
 export const startApp = async ({
   title = 'LOGO',
   mount = 'root',
@@ -139,9 +155,13 @@ export const startApp = async ({
   auther = DefaultAuther,
   t = identity,
   config_provider_options = {},
+  lang = 'en',
 }) => {
 
-  title = t(title)
+  if (lang === 'zh') {
+    t = zh_t
+    config_provider_options = { ...config_provider_options, locale: zh_locale }
+  }
 
   const auth = new Auth(auther)
 
@@ -282,7 +302,7 @@ export const startApp = async ({
       createElement(Card, {},
         createElement(Form, { initialValues: { autoLogin: true }, onFinish },
           createElement('h1', { style: { textAlign: 'center' } },
-            createElement(HeadTitle, { title: `${t('Login')} - ${title}`}, title)
+            createElement(HeadTitle, { title: `${t('Log in')} - ${title}`}, title)
           ),
           createElement(Form.Item, { name: 'email', rules: [{ required: true, message: t('Please input your Email!'),}] },
             createElement(Input, { prefix: createElement(UserOutlined), placeholder: t('Email') }),
