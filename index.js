@@ -39,6 +39,7 @@ import {
   Space,
   Avatar,
   Dropdown,
+  Card,
 } from 'antd'
 
 const { Header, Content, Footer, Sider } = Layout
@@ -254,6 +255,9 @@ export const startApp = ({
     const auth = useAuth()
     const { message } = AntdApp.useApp()
     const [loading, setLoading] = useState(false)
+    const {
+      token: { colorBgLayout },
+    } = theme.useToken()
 
     if (auth.status === 'checking') return createElement(Loading)
     if (auth.status === 'checked') return createElement(Navigate, { to: '/' })
@@ -270,22 +274,24 @@ export const startApp = ({
       setLoading(false)
     }
 
-    return createElement(Flex, { style: { height: '100vh' }, justify: 'center', align: 'center' },
-      createElement(Form, { initialValues: { autoLogin: true }, onFinish },
-        createElement('h1', { style: { textAlign: 'center' } },
-          createElement(HeadTitle, { title: `Login - ${title}`}, title)
-        ),
-        createElement(Form.Item, { name: 'email', rules: [{ required: true, message: 'Please input your Email!',}] },
-          createElement(Input, { prefix: createElement(UserOutlined), placeholder: 'Email' }),
-        ),
-        createElement(Form.Item, { name: 'password', rules: [{ required: true, message: 'Please input your Password!',}] },
-          createElement(Input.Password, { prefix: createElement(LockOutlined), placeholder: 'Password' }),
-        ),
-        createElement(Form.Item, { name: 'autoLogin', valuePropName: 'checked' },
-          createElement(Checkbox, null, 'Remember me'),
-        ),
-        createElement(Form.Item, null,
-          createElement(Button, { type: 'primary', htmlType: 'submit', loading, block: true }, 'Log in'),
+    return createElement(Flex, { style: { height: '100vh', background: colorBgLayout }, justify: 'center', align: 'center' },
+      createElement(Card, {},
+        createElement(Form, { initialValues: { autoLogin: true }, onFinish },
+          createElement('h1', { style: { textAlign: 'center' } },
+            createElement(HeadTitle, { title: `Login - ${title}`}, title)
+          ),
+          createElement(Form.Item, { name: 'email', rules: [{ required: true, message: 'Please input your Email!',}] },
+            createElement(Input, { prefix: createElement(UserOutlined), placeholder: 'Email' }),
+          ),
+          createElement(Form.Item, { name: 'password', rules: [{ required: true, message: 'Please input your Password!',}] },
+            createElement(Input.Password, { prefix: createElement(LockOutlined), placeholder: 'Password' }),
+          ),
+          createElement(Form.Item, { name: 'autoLogin', valuePropName: 'checked' },
+            createElement(Checkbox, null, 'Remember me'),
+          ),
+          createElement(Form.Item, null,
+            createElement(Button, { type: 'primary', htmlType: 'submit', loading, block: true }, 'Log in'),
+          ),
         ),
       ),
     )
