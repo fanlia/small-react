@@ -140,7 +140,8 @@ const zh_t_map = {
   'Email': '邮箱',
   'Please input your Password!': '请输入密码!',
   'Password': '密码',
-  'Remember me': '记住我'
+  'Remember me': '记住我',
+  'Back Home': '回到首页',
 }
 
 const zh_t = key => zh_t_map[key] || key
