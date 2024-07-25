@@ -156,7 +156,7 @@ export const startApp = async ({
   auther = DefaultAuther,
   t = identity,
   config_provider_options = {},
-  lang = 'en',
+  lang = navigator.language,
 }) => {
 
   if (lang === 'zh') {
