@@ -302,7 +302,7 @@ export const startApp = async ({
     }
 
     return createElement(Flex, { style: { height: '100vh', background: colorBgLayout }, justify: 'center', align: 'center' },
-      createElement(Card, {},
+      createElement(Card, { style: { minWidth: '24rem' } },
         createElement(Form, { initialValues: { autoLogin: true }, onFinish },
           createElement('h1', { style: { textAlign: 'center' } },
             createElement(HeadTitle, { title: `${t('Log in')} - ${title}`}, title)
